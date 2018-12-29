@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nfs-client-provisioner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+      - name: nfs-client-provisioner
+        image: huanwei/nfs-client-provisioner:latest
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: nfs-client-root
+          mountPath: /persistentvolumes
+        env:
+        - name: PROVISIONER_NAME
+          value: harmonycoud.cn/nfs
+        - name: NFS_SERVER
+          value: 10.10.101.68
+        - name: NFS_PATH
+          value: /nfs/k8s
+      volumes:
+      - name: nfs-client-root
+        nfs:
+          server: 10.10.101.68
+          path: /nfs/k8s
