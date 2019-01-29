@@ -23,11 +23,11 @@ spec:
         - name: PROVISIONER_NAME
           value: harmonycoud.cn/nfs
         - name: NFS_SERVER
-          value: 10.10.101.68
+          value: 10.10.102.62
         - name: NFS_PATH
           value: /nfs/k8s
       volumes:
       - name: nfs-client-root
         nfs:
-          server: 10.10.101.68
+          server: 10.10.102.62
           path: /nfs/k8s
